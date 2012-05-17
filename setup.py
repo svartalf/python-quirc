@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='quirc',
-    version='0.1.0',
+    version='0.2.0',
     author='SvartalF',
     author_email='self@svartalf.info',
     url='https://github.com/svartalf/python-quirc',
