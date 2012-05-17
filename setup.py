@@ -2,14 +2,18 @@
 
 from setuptools import setup
 
+import quirc
+
 setup(
     name='quirc',
-    version='0.2.0',
+    version=quirc.__version__,
+    license=open('LICENSE').read(),
     author='SvartalF',
     author_email='self@svartalf.info',
     url='https://github.com/svartalf/python-quirc',
     description='ctypes wrapper for QR code decoding library `libquirc`',
     packages=('quirc',),
+    test_suite='tests.load_tests',
     classifiers=(
         'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',

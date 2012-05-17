@@ -12,10 +12,6 @@ class TestQuirc(unittest.TestCase):
         self.assertEqual(quirc.version(), '1.0')
 
     def test_creation(self):
-        while True:
-            try:
-                obj = quirc.new()
-                quirc.destroy(obj)
-            except KeyboardInterrupt:
-                return
-            time.sleep(0.05)
+        obj = quirc.new()
+        quirc.resize(obj, 640, 480)
+        quirc.destroy(obj)
