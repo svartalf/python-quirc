@@ -5,6 +5,7 @@ python:
     - '2.7'
     - 'pypy'
 before_install:
+    - 'sudo apt-get install libsdl1.2-dev'
     - 'git clone --depth 1 git://github.com/dlbeer/quirc.git /tmp/quirc'
     - 'make -C /tmp/quirc libquirc.so libquirc.a'
     - 'sudo make -C /tmp/quirc install'
