@@ -9,7 +9,7 @@ __all__ = ('version', 'new', 'destroy')
 import ctypes
 from ctypes.util import find_library
 
-libquirc = ctypes.CDLL(find_library('quirc'), use_errno=True)
+libquirc = ctypes.CDLL(find_library('quirc'))
 
 version = libquirc.quirc_version
 version.restype = ctypes.c_char_p
