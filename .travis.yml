@@ -8,8 +8,8 @@ before_install:
     - 'sudo apt-get install libsdl1.2-dev'
     - 'git clone --depth 1 git://github.com/dlbeer/quirc.git /tmp/quirc'
     - 'make -C /tmp/quirc libquirc.so libquirc.a'
-    - 'install -o root -g root -m 0644 libquirc.a /usr/local/lib'
-    - 'install -o root -g root -m 0755 libquirc.so /usr/local/lib/libquirc.so.1.0'
-    - 'ln -sf libquirc.so.1.0 /usr/local/lib/libquirc.so.1'
-    - 'ln -sf libquirc.so.1.0 /usr/local/lib/libquirc.so'
-script: LD_PRELOAD=/usr/local/lib/libquirc.so.1.0 python setup.py test
+    - 'install -o root -g root -m 0644 /tmp/quirc/libquirc.a /usr/local/lib'
+    - 'install -o root -g root -m 0755 /tmp/quirc/libquirc.so /usr/local/lib/libquirc.so.1.0'
+    - 'ln -sf /usr/local/lib/libquirc.so.1.0 /usr/local/lib/libquirc.so.1'
+    - 'ln -sf /usr/local/lib/libquirc.so.1.0 /usr/local/lib/libquirc.so'
+script: LD_PRELOAD=/usr/local/lib/libquirc.so python setup.py test
