@@ -4,9 +4,10 @@ Python ctypes interface for QR code decoding library [libquirc](https://github.c
 
 # Tests
 
+Run tests with a `tox` command or look for [Travis build logs](http://travis-ci.org/#!/svartalf/python-quirc).
+
 [![Build Status](https://secure.travis-ci.org/svartalf/python-quirc.png)](http://travis-ci.org/svartalf/python-quirc)
 
-Run tests with a `tox` command.
 
 # Trobleshooting
 

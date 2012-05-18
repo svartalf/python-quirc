@@ -7,7 +7,7 @@ import quirc
 setup(
     name='quirc',
     version=quirc.__version__,
-    license=open('LICENSE').read(),
+    license='', # TODO: make license file readable if tox tests running
     author='SvartalF',
     author_email='self@svartalf.info',
     url='https://github.com/svartalf/python-quirc',
