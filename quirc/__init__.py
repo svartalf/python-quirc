@@ -9,6 +9,8 @@ __all__ = ('version', 'new', 'destroy')
 import ctypes
 from ctypes.util import find_library
 
+c_int_pointer = ctypes.POINTER(ctypes.c_int)
+
 libquirc = ctypes.CDLL(find_library('quirc'))
 
 version = libquirc.quirc_version
@@ -59,7 +61,22 @@ def resize(structure, width, height):
 
     The size of an image must be specified before codes can be analyzed."""
 
-    result = _resize(structure, width, height)
+    result = _resize(structure, ctypes.c_int(width), ctypes.c_int(height))
     if result == -1:
         raise MemoryError()
 
+_begin = libquirc.quirc_begin
+_begin.argtypes = (QuircPointer, c_int_pointer, c_int_pointer)
+_begin.restype = ctypes.c_int
+
+def begin(structure, width, height):
+    return _begin(structure, ctypes.pointer(ctypes.c_int(width)), ctypes.pointer(ctypes.c_int(height)))
+
+_end = libquirc.quirc_end
+_end.argtypes = (QuircPointer,)
+_end.restype = None
+
+def end(structure):
+    # TODO: docstring
+    # TODO: parameter type check
+    _end(structure)
