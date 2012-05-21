@@ -3,7 +3,7 @@
 
 """Bindings to QR code decoding library `quirc`"""
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 __all__ = ('version', 'new', 'destroy')
 
 import ctypes
@@ -67,7 +67,7 @@ def resize(structure, width, height):
 
 _begin = libquirc.quirc_begin
 _begin.argtypes = (QuircPointer, c_int_pointer, c_int_pointer)
-_begin.restype = ctypes.c_int
+_begin.restype = c_int_pointer
 
 def begin(structure, width, height):
     return _begin(structure, ctypes.pointer(ctypes.c_int(width)), ctypes.pointer(ctypes.c_int(height)))

@@ -7,6 +7,7 @@ python:
 before_install:
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.5" ]]; then pip install unittest2 --use-mirrors; fi'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install unittest2 --use-mirrors; fi'
+    - 'pip install PIL'
     - 'sudo apt-get install libsdl1.2-dev'
     - 'git clone --depth 1 git://github.com/dlbeer/quirc.git /tmp/quirc'
     - 'make -C /tmp/quirc libquirc.so libquirc.a'
