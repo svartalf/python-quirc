@@ -1,17 +1,26 @@
 language: python
+
 python:
     - '2.5'
     - '2.6'
     - '2.7'
     - 'pypy'
+
+# Compile C library
 before_install:
-    - 'sudo apt-get install libsdl1.2-dev python-imaging'
-    - 'if [[ $TRAVIS_PYTHON_VERSION == "2.5" ]]; then pip install unittest2 --use-mirrors; fi'
-    - 'if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install unittest2 --use-mirrors; fi'
+    - 'sudo apt-get install libsdl1.2-dev zlib1g-dev zlib1g'
     - 'git clone --depth 1 git://github.com/dlbeer/quirc.git /tmp/quirc'
     - 'make -C /tmp/quirc libquirc.so libquirc.a'
     - 'sudo install -o root -g root -m 0644 /tmp/quirc/libquirc.a /usr/local/lib'
     - 'sudo install -o root -g root -m 0755 /tmp/quirc/libquirc.so /usr/local/lib/libquirc.so.1.0'
     - 'sudo ln -sf /usr/local/lib/libquirc.so.1.0 /usr/local/lib/libquirc.so.1'
     - 'sudo ln -sf /usr/local/lib/libquirc.so.1.0 /usr/local/lib/libquirc.so'
+
+# Install test dependencies
+install:
+    - 'pip install PIL'
+    - 'if [[ $TRAVIS_PYTHON_VERSION == "2.5" ]]; then pip install unittest2 --use-mirrors; fi'
+    - 'if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install unittest2 --use-mirrors; fi'
+
+# Rock'n'roll!
 script: LD_PRELOAD=/usr/local/lib/libquirc.so python setup.py test
