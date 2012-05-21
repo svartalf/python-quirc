@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os.path
 import ctypes
 import unittest
 
@@ -7,6 +8,9 @@ import quirc
 
 
 class TestQuirc(unittest.TestCase):
+
+    def setUp(self):
+        self._folder = os.path.abspath(os.path.dirname(__file__))
 
     def test_version(self):
         self.assertEqual(quirc.version(), '1.0')
@@ -27,7 +31,7 @@ class TestQuirc(unittest.TestCase):
         except ImportError:
             from PIL import Image
 
-        image = Image.open('images/test1.png')
+        image = Image.open(os.path.join(self._folder, 'images', 'test1.png'))
         # We need a black/white image
         if image.mode != '1':
             image = image.convert('1')
