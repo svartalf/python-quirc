@@ -8,7 +8,7 @@ python:
 
 # Compile C library
 before_install:
-    - 'sudo apt-get install libsdl1.2-dev zlib1g-dev libpng-dev'
+    - 'sudo apt-get install libsdl1.2-dev zlib-bin zlib1g-dev zlibc libpng-dev'
     - 'git clone --depth 1 git://github.com/dlbeer/quirc.git /tmp/quirc'
     - 'make -C /tmp/quirc libquirc.so libquirc.a'
     - 'sudo install -o root -g root -m 0644 /tmp/quirc/libquirc.a /usr/local/lib'
@@ -18,7 +18,7 @@ before_install:
 
 # Install test dependencies
 install:
-    - 'sudo pip install PIL'
+    - 'sudo pip install Pillow'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.5" ]]; then sudo pip install unittest2 --use-mirrors; fi'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then sudo pip install unittest2 --use-mirrors; fi'
 
