@@ -33,8 +33,8 @@ class TestQuirc(unittest.TestCase):
 
         image = Image.open(os.path.join(self._folder, 'images', 'test1.png'))
         # We need a black/white image
-        if image.mode != '1':
-            image = image.convert('1')
+        if image.mode not in ('1', 'L'):
+            image = image.convert('L')
         # Make a pixel access object (http://effbot.org/zone/pil-pixel-access.htm)
         pixels = image.load()
         width, height = image.size
@@ -52,4 +52,9 @@ class TestQuirc(unittest.TestCase):
         buffer = quirc.begin(obj, 115, 115)
         buffer.contents = flat
         quirc.end(obj)
+
+        amount = quirc.count(obj)
+
+        self.assertEqual(amount, 1)
+
         quirc.destroy(obj)

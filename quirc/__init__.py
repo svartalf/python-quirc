@@ -47,8 +47,9 @@ _destroy.restype = None
 def destroy(structure):
     """Destroy a QR-code recognizer.
 
-    TODO: attribute type check
     """
+
+    # TODO: parameter type check
 
     _destroy(structure)
 
@@ -61,6 +62,8 @@ def resize(structure, width, height):
 
     The size of an image must be specified before codes can be analyzed."""
 
+    # TODO: parameter type check
+
     result = _resize(structure, ctypes.c_int(width), ctypes.c_int(height))
     if result == -1:
         raise MemoryError()
@@ -70,6 +73,9 @@ _begin.argtypes = (QuircPointer, c_int_pointer, c_int_pointer)
 _begin.restype = c_int_pointer
 
 def begin(structure, width, height):
+    # TODO: docstring
+    # TODO: parameter type check
+
     return _begin(structure, ctypes.pointer(ctypes.c_int(width)), ctypes.pointer(ctypes.c_int(height)))
 
 _end = libquirc.quirc_end
@@ -80,3 +86,13 @@ def end(structure):
     # TODO: docstring
     # TODO: parameter type check
     _end(structure)
+
+_count = libquirc.quirc_count
+_count.argtypes = (QuircPointer,)
+_count.restype = ctypes.c_int
+
+def count(structure):
+    # TODO: docstring
+    # TODO: parameter type check
+
+    return _count(structure)
