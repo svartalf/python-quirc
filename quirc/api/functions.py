@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__all__ = ('version', 'new', 'destroy')
-
 import ctypes
 from ctypes.util import find_library
 
-from quirc.api.structures import QuircPointer, DataPointer
+from quirc.api.structures import QuircPointer, CodePointer
 
 c_int_pointer = ctypes.POINTER(ctypes.c_int)
 c_uint8_pointer = ctypes.POINTER(ctypes.c_uint8)
@@ -90,7 +88,7 @@ def count(structure):
     return _count(structure)
 
 _extract = libquirc.quirc_extract
-_extract.argtypes = (QuircPointer, ctypes.c_int, DataPointer)
+_extract.argtypes = (QuircPointer, ctypes.c_int, CodePointer)
 _extract.restype = None
 
 def extract(structure, idx, code):

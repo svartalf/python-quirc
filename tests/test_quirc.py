@@ -43,4 +43,8 @@ class TestQuirc(unittest.TestCase):
         amount = quirc.api.count(obj)
         self.assertEqual(amount, 1)
 
+        for i in range(amount):
+            info = quirc.api.structures.Code()
+            quirc.api.extract(obj, i, ctypes.pointer(info))
+
         quirc.api.destroy(obj)
