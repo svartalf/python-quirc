@@ -32,29 +32,28 @@ class TestQuirc(unittest.TestCase):
             from PIL import Image
 
         image = Image.open(os.path.join(self._folder, 'images', 'test1.png'))
-        # We need a black/white image
+        # We need a grayscale image
         if image.mode not in ('1', 'L'):
             image = image.convert('L')
+
         # Make a pixel access object (http://effbot.org/zone/pil-pixel-access.htm)
         pixels = image.load()
         width, height = image.size
 
-        # Unwrap an 2d array into a flat bytes array
-        flat = (ctypes.c_int*(width*height))()
+        obj = quirc.new()
+        quirc.resize(obj, width, height)
+        buffer = quirc.begin(obj, width, height)
+
+        # Fill buffer with a image pixels. One cell, one pixel.
         idx = 0
         for i in xrange(height):
             for j in xrange(width):
-                flat[idx] = pixels[i, j]
+                buffer[idx] = ctypes.c_uint8(pixels[i, j])
                 idx += 1
 
-        obj = quirc.new()
-        quirc.resize(obj, 115, 115)
-        buffer = quirc.begin(obj, 115, 115)
-        buffer.contents = flat
         quirc.end(obj)
 
         amount = quirc.count(obj)
-
         self.assertEqual(amount, 1)
 
         quirc.destroy(obj)

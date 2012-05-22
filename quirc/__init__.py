@@ -10,6 +10,7 @@ import ctypes
 from ctypes.util import find_library
 
 c_int_pointer = ctypes.POINTER(ctypes.c_int)
+c_uint8_pointer = ctypes.POINTER(ctypes.c_uint8)
 
 libquirc = ctypes.CDLL(find_library('quirc'))
 
@@ -70,7 +71,7 @@ def resize(structure, width, height):
 
 _begin = libquirc.quirc_begin
 _begin.argtypes = (QuircPointer, c_int_pointer, c_int_pointer)
-_begin.restype = c_int_pointer
+_begin.restype = c_uint8_pointer
 
 def begin(structure, width, height):
     # TODO: docstring
