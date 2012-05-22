@@ -40,11 +40,16 @@ class TestQuirc(unittest.TestCase):
 
         quirc.api.end(obj)
 
-        amount = quirc.api.count(obj)
-        self.assertEqual(amount, 1)
+        num_codes = quirc.api.count(obj)
+        self.assertEqual(num_codes, 1)
 
-        for i in range(amount):
-            info = quirc.api.structures.Code()
-            quirc.api.extract(obj, i, ctypes.pointer(info))
+        for i in range(num_codes):
+            code = quirc.api.structures.Code()
+            data = quirc.api.structures.Data()
+
+            quirc.api.extract(obj, i, ctypes.byref(code))
+            quirc.api.decode(ctypes.byref(code), ctypes.byref(data))
+            print data.payload_len
+            print ctypes.string_at(data.payload,5)
 
         quirc.api.destroy(obj)

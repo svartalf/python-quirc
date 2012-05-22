@@ -17,3 +17,15 @@ DATA_TYPE_NUMERIC = 1
 DATA_TYPE_ALPHA = 2
 DATA_TYPE_BYTE = 4
 DATA_TYPE_KANJI = 8
+
+# Various decoder errors which may occur.
+# Same as a `quirc_decode_error_t` enum.
+_DECODE_ERRORS = {
+    1: 'Invalid grid size',
+    2: 'Invalid version',
+    3: 'Format ECC',
+    4: 'Data ECC',
+    5: 'Unknown data type',
+    6: 'Data overflow',
+    7: 'Data underflow',
+}

@@ -4,7 +4,9 @@
 import ctypes
 from ctypes.util import find_library
 
-from quirc.api.structures import QuircPointer, CodePointer
+from quirc.api import constants
+from quirc.api.exceptions import DecodeException
+from quirc.api.structures import QuircPointer, CodePointer, DataPointer
 
 c_int_pointer = ctypes.POINTER(ctypes.c_int)
 c_uint8_pointer = ctypes.POINTER(ctypes.c_uint8)
@@ -89,9 +91,20 @@ def count(structure):
 
 _extract = libquirc.quirc_extract
 _extract.argtypes = (QuircPointer, ctypes.c_int, CodePointer)
-_extract.restype = None
+_extract.restype = ctypes.c_int
 
 def extract(structure, idx, code):
     # TODO: doctring
     # TODO: parameter type check
     _extract(structure, idx, code)
+
+def _decode_errcheck(result, func, arguments):
+    if result:
+        raise DecodeException(constants._DECODE_ERRORS[result])
+
+_decode = libquirc.quirc_decode
+_decode.argtypes = (CodePointer, DataPointer)
+_decode.restype = ctypes.c_int # TODO: return proper value
+_decode.errcheck = _decode_errcheck
+def decode(code, data):
+    return _decode(code, data)
