@@ -4,10 +4,12 @@ from setuptools import setup
 
 import quirc
 
+print __file__
+
 setup(
     name='quirc',
     version=quirc.__version__,
-    license='', # TODO: make license file readable if tox tests running
+    license=open('LICENSE').read(),
     author='SvartalF',
     author_email='self@svartalf.info',
     url='https://github.com/svartalf/python-quirc',
