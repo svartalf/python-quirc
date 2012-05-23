@@ -2,15 +2,21 @@
 
 Python ctypes interface for QR code decoding library [libquirc](https://github.com/dlbeer/quirc)
 
-# Tests
+## Tests
 
 Run tests with a `python setup.py test` command or look for [Travis build logs](http://travis-ci.org/#!/svartalf/python-quirc).
 
 [![Build Status](https://secure.travis-ci.org/svartalf/python-quirc.png)](http://travis-ci.org/svartalf/python-quirc)
 
-# Usage
+## Versioning and API stability
 
-## Low-level API
+API stability isn't guaranteed before 1.0.0 version. Versioning is propagated by [semver.org](http://semver.org).
+
+When version 1.0.0 will be released the API will be frozen, and any changes which aren't backwards compatible will force a major version bump.
+
+## Usage
+
+### Low-level API
 
 Low-level API directly corresponds to the C API:
 
@@ -63,7 +69,11 @@ Finally, release the allocated memory
 
     quirc.api.destroy(qr)
 
-# Trobleshooting
+## Trobleshooting
 
 If library raises an exception `OSError: libquirc.so.1: cannot open shared object file: No such file or directory`,
 set environment variable LD_PRELOAD_PATH to `/usr/local/lib/` like this: `$ LD_PRELOAD_PATH=/usr/local/lib/ ./myscript.py`
+
+## Contributing
+
+If you want to contribute, follow the [pep8](http://www.python.org/dev/peps/pep-0008/) guideline, and include the tests.
