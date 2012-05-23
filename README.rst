@@ -17,94 +17,10 @@ API stability isn't guaranteed before ``1.0.0`` version. Versioning is propagate
 
 When version ``1.0.0`` will be released the API will be frozen, and any changes which aren't backwards compatible will force a major version bump.
 
-Usage
------
+Documentation
+-------------
 
-High-level API
-``````````````
-
-Just call a `quirc.decode()` function with a `PIL.Image` object as a parameter, like this:
-
-.. code-block::
-
-    import Image
-
-    image = Image.open('tests/images/test1.png')
-    for code in quirc.decode(image):
-        print code['text']
-        # >>> test1
-
-Currently only ``PIL`` is supported.
-
-Low-level API
-`````````````
-
-Low-level API directly corresponds to the C API:
-
-Create new `Quirc` object with a `quirc.api.new` function.
-
-.. code-block::
-
-    qr = quirc.api.new()
-
-Set the image size that you'll be working with
-
-.. code-block::
-
-    quirc.api.resize(qr, 640, 480)
-
-Processing frames is done in two stages. The first stage is an image-recognition stage called identification,
-which takes a grayscale image and searches for QR codes.
-
-.. code-block::
-
-    buffer = quirc.api.begin(qr, 640, 480)
-
-Now fill out this image buffer with a pixels. One byte per pixel, w pixels per line, h lines in the buffer.
-Here is a simplest example from the `tests/test_quirc.py:test_fill`:
-
-.. code-block::
-
-    for idx, pixel in enumerate(pixels):
-        buffer[idx] = ctypes.c_uint8(ord(pixel))
-
-After the call to `quirc.api.end`, the decoder holds a list of detected QR codes
-
-.. code-block::
-
-    quirc.api.end(qr)
-
-At this point, the second stage of processing occurs - decoding.
-
-Number of QR codes identified in this image
-
-.. code-block::
-
-    num_codes = quirc.api.count(obj)
-
-Iterate all over the identified codes
-
-.. code-block::
-
-    for i in range(num_codes):
-        # Prepare required structures for data filling
-
-        # `quirc.api.structures.Code` structure contains information about detected QR code in the input image
-        code = quirc.api.structures.Code()
-        quirc.api.extract(qr, i, ctypes.byref(code))
-
-        # `quirc.api.structures.Data` holds the decoded QR code data
-        data = quirc.api.structures.Data()
-        quirc.api.decode(ctypes.byref(code), ctypes.byref(data))
-
-        # Extracting QR-encoded string now
-        print ctypes.string_at(data.payload, data.payload_len)
-
-Finally, release the allocated memory
-
-.. code-block::
-
-    quirc.api.destroy(qr)
+Read the documentation and usage examples `here <http://python-quirc.readthedocs.org>`_.
 
 Trobleshooting
 --------------
