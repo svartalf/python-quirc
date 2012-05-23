@@ -44,8 +44,8 @@ class TestLowLevelAPICase(unittest.TestCase):
         data = quirc.api.structures.Data()
 
         # Extract first code
-        quirc.api.extract(obj, 0, ctypes.byref(code))
-        quirc.api.decode(ctypes.byref(code), ctypes.byref(data))
+        quirc.api.extract(obj, 0, code)
+        quirc.api.decode(code, data)
 
         # Checking for data
         self.assertEqual(data.payload_len, 5)

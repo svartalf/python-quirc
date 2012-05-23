@@ -96,7 +96,7 @@ _extract.restype = ctypes.c_int
 def extract(structure, idx, code):
     # TODO: doctring
     # TODO: parameter type check
-    _extract(structure, idx, code)
+    _extract(structure, idx, ctypes.byref(code))
 
 def _decode_errcheck(result, func, arguments):
     if result:
@@ -107,4 +107,4 @@ _decode.argtypes = (CodePointer, DataPointer)
 _decode.restype = ctypes.c_int # TODO: return proper value
 _decode.errcheck = _decode_errcheck
 def decode(code, data):
-    return _decode(code, data)
+    return _decode(ctypes.byref(code), ctypes.byref(data))
