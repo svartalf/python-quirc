@@ -34,7 +34,6 @@ class TestQuircCase(unittest.TestCase):
         code = result[0]
 
         self.assertEqual(code['data_type'], 4)
-        self.assertEqual(code['mask'], 6)
         self.assertEqual(code['ecc_level'], 0)
         self.assertEqual(code['size'], 29)
 

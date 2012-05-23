@@ -8,6 +8,12 @@ python-quirc is a ctypes bindings for `quirc <https://github.com/dlbeer/quirc/>`
 
 This library is fast, small, easy to use, have a very small memory usage,
 and optionally requires one of the image processing libraries.
+
+Links
+------
+
+ * `Documentation <http://python-quirc.readthedocs.org>`_
+
 """
 
 from setuptools import setup

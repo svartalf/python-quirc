@@ -61,9 +61,8 @@ def decode(image):
             'size': code.size,
             'version': data.version,
             'ecc_level': data.ecc_level,
-            'mask': data.mask,
             'data_type': data.data_type,
             'text': ctypes.string_at(data.payload, data.payload_len),
-            }
+        }
 
     api.destroy(obj)
