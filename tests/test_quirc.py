@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import unittest
+try:
+    import unittest2 as unittest # For Python<=2.6
+except ImportError:
+    import unittest
 
 import quirc
 
