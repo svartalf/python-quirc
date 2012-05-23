@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
 class QuircException(BaseException):
     pass
 
 
-class DecodeException(QuircException):
+class DecodeException(QuircException, ValueError):
 
     def __init__(self, message):
         self._message = message

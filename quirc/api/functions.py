@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+__all__ = ('version', 'new', 'destroy', 'resize', 'begin', 'end', 'count', 'extract', 'decode')
+
 import ctypes
 from ctypes.util import find_library
 
