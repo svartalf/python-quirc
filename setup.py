@@ -2,13 +2,9 @@
 
 from setuptools import setup
 
-import quirc
-
-print __file__
-
 setup(
     name='quirc',
-    version=quirc.__version__,
+    version='0.6.1',
     license=open('LICENSE').read(),
     author='SvartalF',
     author_email='self@svartalf.info',

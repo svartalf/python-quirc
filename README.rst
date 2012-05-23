@@ -1,19 +1,19 @@
 python-quirc
 ============
 
-Python ctypes interface for QR code decoding library `libquirc<https://github.com/dlbeer/quirc/>`_.
+Python ctypes interface for QR code decoding library `libquirc <https://github.com/dlbeer/quirc/>`_.
 
 Tests
 -----
 
-Run tests with a `python setup.py test` command or look for `Travis build logs<http://travis-ci.org/#!/svartalf/python-quirc>`_.
+Run tests with a `python setup.py test` command or look for `Travis build logs <http://travis-ci.org/#!/svartalf/python-quirc>`_.
 
 .. image:: https://secure.travis-ci.org/svartalf/python-quirc.png
 
 Versioning and API stability
 ----------------------------
 
-API stability isn't guaranteed before ``1.0.0`` version. Versioning is propagated by `semver.org<http://semver.org>`_.
+API stability isn't guaranteed before ``1.0.0`` version. Versioning is propagated by `semver.org <http://semver.org>`_.
 
 When version ``1.0.0`` will be released the API will be frozen, and any changes which aren't backwards compatible will force a major version bump.
 
@@ -115,4 +115,4 @@ set environment variable LD_PRELOAD_PATH to `/usr/local/lib/` like this: `$ LD_P
 Contributing
 ------------
 
-If you want to contribute, follow the `pep8<http://www.python.org/dev/peps/pep-0008/>`_ guideline, and include the tests.
+If you want to contribute, follow the `pep8 <http://www.python.org/dev/peps/pep-0008/>`_ guideline, and include the tests.
