@@ -16,6 +16,19 @@ When version 1.0.0 will be released the API will be frozen, and any changes whic
 
 ## Usage
 
+### High-level API
+
+Just call a `quirc.decode()` function with a PIL.Image object as a parameter, like this:
+
+    import Image
+
+    image = Image.open('tests/images/test1.png')
+    for code in quirc.decode(image):
+        print code['text']
+        # >>> test1
+
+Currently only PIL is supported.
+
 ### Low-level API
 
 Low-level API directly corresponds to the C API:
