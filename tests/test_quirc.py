@@ -15,11 +15,6 @@ class TestQuirc(unittest.TestCase):
     def test_version(self):
         self.assertEqual(quirc.api.version(), '1.0')
 
-    def test_creation(self):
-        obj = quirc.api.new()
-        quirc.api.resize(obj, 640, 480)
-        quirc.api.destroy(obj)
-
     def test_fill(self):
         """Test filling image buffer
 
@@ -38,18 +33,22 @@ class TestQuirc(unittest.TestCase):
         for idx, pixel in enumerate(pixels):
             buffer[idx] = ctypes.c_uint8(ord(pixel))
 
+        # Finish image recognition
         quirc.api.end(obj)
 
+        # Our image contains only one image
         num_codes = quirc.api.count(obj)
         self.assertEqual(num_codes, 1)
 
-        for i in range(num_codes):
-            code = quirc.api.structures.Code()
-            data = quirc.api.structures.Data()
+        code = quirc.api.structures.Code()
+        data = quirc.api.structures.Data()
 
-            quirc.api.extract(obj, i, ctypes.byref(code))
-            quirc.api.decode(ctypes.byref(code), ctypes.byref(data))
-            print data.payload_len
-            print ctypes.string_at(data.payload,5)
+        # Extract first code
+        quirc.api.extract(obj, 0, ctypes.byref(code))
+        quirc.api.decode(ctypes.byref(code), ctypes.byref(data))
+
+        # Checking for data
+        self.assertEqual(data.payload_len, 5)
+        self.assertEqual(ctypes.string_at(data.payload, data.payload_len), 'test1')
 
         quirc.api.destroy(obj)

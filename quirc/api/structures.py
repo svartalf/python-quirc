@@ -18,7 +18,7 @@ QuircPointer = ctypes.POINTER(Quirc)
 class Point(ctypes.Structure):
     """This structure describes a location in the input image buffer
 
-    Map to `strut quirc_code`
+    Map to `struct quirc_code`
     """
 
     _fields_ = (
