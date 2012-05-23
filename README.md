@@ -25,7 +25,7 @@ Set the image size that you'll be working with
 Processing frames is done in two stages. The first stage is an image-recognition stage called identification,
 which takes a grayscale image and searches for QR codes.
 
-    buffer = quirc.api.begin(qr, width, height)
+    buffer = quirc.api.begin(qr, 640, 480)
 
 Now fill out this image buffer with a pixels. One byte per pixel, w pixels per line, h lines in the buffer.
 Here is a simplest example from the `tests/test_quirc.py:test_fill`:
