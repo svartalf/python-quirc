@@ -27,6 +27,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries',
+        'Topic :: Scientific/Engineering :: Image Recognition',
         'Topic :: Multimedia :: Graphics',
     ),
 )
