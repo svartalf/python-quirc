@@ -7,7 +7,7 @@ import unittest
 import quirc
 
 
-class TestQuirc(unittest.TestCase):
+class TestLowLevelAPICase(unittest.TestCase):
 
     def setUp(self):
         self._folder = os.path.abspath(os.path.dirname(__file__))
