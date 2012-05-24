@@ -7,6 +7,7 @@ Handles convertion into a grayscale mode internally.
 
 import ctypes
 
+
 def pil(image):
     """Convert the PIL.Image object to the pixels buffer
 
