@@ -23,6 +23,7 @@ _new = libquirc.quirc_new
 _new.argtypes = ()
 _new.restype = QuircPointer
 
+
 def new():
     """Construct a new QR-code recognizer.
 
@@ -38,6 +39,7 @@ _destroy = libquirc.quirc_destroy
 _destroy.argtypes = (QuircPointer,)
 _destroy.restype = None
 
+
 def destroy(structure):
     """Destroy a QR-code recognizer.
 
@@ -50,6 +52,7 @@ def destroy(structure):
 _resize = libquirc.quirc_resize
 _resize.argtypes = (QuircPointer, ctypes.c_int, ctypes.c_int)
 _resize.restype = ctypes.c_int
+
 
 def resize(structure, width, height):
     """Resize the QR-code recognizer.
@@ -66,6 +69,7 @@ _begin = libquirc.quirc_begin
 _begin.argtypes = (QuircPointer, c_int_pointer, c_int_pointer)
 _begin.restype = c_uint8_pointer
 
+
 def begin(structure, width, height):
     # TODO: docstring
     # TODO: parameter type check
@@ -76,6 +80,7 @@ _end = libquirc.quirc_end
 _end.argtypes = (QuircPointer,)
 _end.restype = None
 
+
 def end(structure):
     # TODO: docstring
     # TODO: parameter type check
@@ -84,6 +89,7 @@ def end(structure):
 _count = libquirc.quirc_count
 _count.argtypes = (QuircPointer,)
 _count.restype = ctypes.c_int
+
 
 def count(structure):
     # TODO: docstring
@@ -95,10 +101,12 @@ _extract = libquirc.quirc_extract
 _extract.argtypes = (QuircPointer, ctypes.c_int, CodePointer)
 _extract.restype = ctypes.c_int
 
+
 def extract(structure, idx, code):
     # TODO: doctring
     # TODO: parameter type check
     _extract(structure, idx, ctypes.byref(code))
+
 
 def _decode_errcheck(result, func, arguments):
     if result:
@@ -106,7 +114,11 @@ def _decode_errcheck(result, func, arguments):
 
 _decode = libquirc.quirc_decode
 _decode.argtypes = (CodePointer, DataPointer)
-_decode.restype = ctypes.c_int # TODO: return proper value
+_decode.restype = ctypes.c_int  # TODO: return proper value
 _decode.errcheck = _decode_errcheck
+
+
 def decode(code, data):
+    # TODO: docstring
+    # TODO: parameter type check
     return _decode(ctypes.byref(code), ctypes.byref(data))

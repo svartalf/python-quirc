@@ -33,9 +33,9 @@ class Code(ctypes.Structure):
     """This structure is used to return information about detected QR codes in the input image."""
 
     _fields_ = (
-        ('corners', Point*4), # The four corners of the QR-code, from top left, clockwise
+        ('corners', Point * 4),  # The four corners of the QR-code, from top left, clockwise
         ('size', ctypes.c_int),
-        ('cell_bitmap', ctypes.c_uint8*constants.MAX_BITMAP),
+        ('cell_bitmap', ctypes.c_uint8 * constants.MAX_BITMAP),
     )
 
 CodePointer = ctypes.POINTER(Code)

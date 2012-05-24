@@ -13,6 +13,7 @@ except ImportError:
     except ImportError:
         USING_PIL = False
 
+
 def decode(image):
     """Recognize image and return generator with all the available QR codes
 
