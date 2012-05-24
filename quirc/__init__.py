@@ -6,4 +6,4 @@
 __version__ = '0.6.2'
 
 import api
-from base import decode
+from base import decode, Decoder

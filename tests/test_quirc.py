@@ -7,15 +7,13 @@ except ImportError:
     import unittest
 
 import quirc
+from quirc import compat
 
-USING_PIL = True
-try:
-    import Image
-except ImportError:
+if compat.have_pil:
     try:
-        from PIL import Image
+        import Image
     except ImportError:
-        USING_PIL = False
+        from PIL import Image
 
 
 class TestQuircCase(unittest.TestCase):
@@ -23,8 +21,17 @@ class TestQuircCase(unittest.TestCase):
     def setUp(self):
         self._folder = os.path.abspath(os.path.dirname(__file__))
 
-    @unittest.skipIf(not USING_PIL, 'PIL is unaccessible')
+    def test_decoder(self):
+        decoder = quirc.Decoder(148, 148)
+        decoder.decode(Image.open(os.path.join(self._folder, 'images', 'link.gif')))
+
+    @unittest.skipIf(not compat.have_pil, 'PIL is unaccessible')
     def test_pil(self):
+        try:
+            import Image
+        except ImportError:
+            from PIL import Image
+
         image = Image.open(os.path.join(self._folder, 'images', 'link.gif'))
 
         result = list(quirc.decode(image))

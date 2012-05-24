@@ -2,16 +2,15 @@
 
 import ctypes
 
-from quirc import api
+import api
+import compat
+import converters
 
-USING_PIL = True
-try:
-    from PIL import Image
-except ImportError:
+if compat.have_pil:
     try:
         import Image
     except ImportError:
-        USING_PIL = False
+        from PIL import Image
 
 
 def decode(image):
@@ -34,24 +33,16 @@ def decode(image):
     buffer = api.begin(obj, width, height)
 
     # Fill buffer with a image pixels. One cell, one pixel.
-    # TODO: looks like a very slow operation
-    idx = 0
-    for i in range(width):
-        for j in range(height):
-            buffer[idx] = ctypes.c_uint8(pixels[j, i])
-            idx += 1
-
-    del idx
+    for idx, pixel in enumerate(converters.pil(image)):
+        buffer[idx] = pixel
 
     # Finish codes identification
     api.end(obj)
 
-    num_codes = api.count(obj)
-
     code = api.structures.Code()
     data = api.structures.Data()
 
-    for i in range(num_codes):
+    for i in range(api.count(obj)):
 
         # Extract first code
         api.extract(obj, i, code)
@@ -67,3 +58,37 @@ def decode(image):
         }
 
     api.destroy(obj)
+
+
+class Decoder(object):
+
+    def __init__(self, width, height):
+        self._width = width
+        self._height = height
+
+        self._obj = api.new()
+        api.resize(self._obj, self._width, self._height)
+
+        self._code = api.structures.Code()
+        self._data = api.structures.Data()
+
+    def decode(self, image):
+        buffer = api.begin(self._obj, self._width, self._height)
+
+        if image.mode not in ('1', 'L'):
+            image = image.convert('L')
+        pixels = image.load()
+
+        idx = 0
+        for i in range(self._width):
+            for j in range(self._height):
+                buffer[idx] = ctypes.c_uint8(pixels[j, i])
+                idx += 1
+
+        del idx
+
+        # Finish codes identification
+        api.end(self._obj)
+
+    def __del__(self):
+        api.destroy(self._obj)
