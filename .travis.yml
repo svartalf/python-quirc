@@ -18,7 +18,7 @@ before_install:
 
 # Install test dependencies
 install:
-    - 'pip install Pillow pep8 --use-mirrors'
+    - 'sudo pip install Pillow pep8 --use-mirrors'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.5" ]]; then sudo pip install unittest2 --use-mirrors; fi'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then sudo pip install unittest2 --use-mirrors; fi'
 
