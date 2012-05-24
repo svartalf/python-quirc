@@ -18,9 +18,12 @@ before_install:
 
 # Install test dependencies
 install:
-    - 'sudo pip install Pillow'
+    - 'pip install Pillow pep8 --use-mirrors'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.5" ]]; then sudo pip install unittest2 --use-mirrors; fi'
     - 'if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then sudo pip install unittest2 --use-mirrors; fi'
+
+before_script:
+    - 'pep8 --ignore=E501,E225 quirc'
 
 # Rock'n'roll!
 script: LD_PRELOAD=/usr/local/lib/libquirc.so python setup.py test
