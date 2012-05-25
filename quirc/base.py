@@ -12,6 +12,7 @@ if compat.have_pil:
     except ImportError:
         from PIL import Image
 
+
 class Code(object):
     """Structure for storing extracted QR code data"""
 
@@ -27,6 +28,7 @@ class Code(object):
 
     def __repr__(self):
         return self.text
+
 
 def decode(image):
     """Recognize image and return generator with all the available QR codes
