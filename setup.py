@@ -26,7 +26,7 @@ setup(
     url='https://github.com/svartalf/python-quirc',
     description='ctypes wrapper for QR code decoding library `libquirc`',
     long_description=__doc__,
-    packages=('quirc',),
+    packages=('quirc', 'quirc.api'),
     test_suite='tests.load_tests',
     classifiers=(
         'Development Status :: 3 - Alpha',
