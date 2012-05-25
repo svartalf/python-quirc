@@ -20,7 +20,7 @@ from setuptools import setup
 
 setup(
     name='quirc',
-    version='0.6.2',
+    version='0.7.0',
     author='SvartalF',
     author_email='self@svartalf.info',
     url='https://github.com/svartalf/python-quirc',
