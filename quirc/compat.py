@@ -2,6 +2,11 @@
 
 """Miscellaneous compatibility checks"""
 
+import sys
+
+
+range = range if sys.version_info[0] == 3 else xrange
+
 # Image libraries
 have_pil = True
 try:

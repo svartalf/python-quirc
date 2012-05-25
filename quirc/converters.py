@@ -7,6 +7,8 @@ Handles convertion into a grayscale mode internally.
 
 import ctypes
 
+from compat import range
+
 
 def pil(image):
     """Convert the PIL.Image object to the pixels buffer
@@ -21,6 +23,9 @@ def pil(image):
 
     pixels = image.load()
 
-    for i in range(width):
-        for j in range(height):
+    width_iter = range(width)
+    height_iter = range(height)
+
+    for i in width_iter:
+        for j in height_iter:
             yield ctypes.c_uint8(pixels[j, i])

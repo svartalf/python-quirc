@@ -66,6 +66,9 @@ class Decoder(object):
         self._width = width
         self._height = height
 
+        self._width_iter = compat.range(self._width)
+        self._height_iter = compat.range(self._height)
+
         self._obj = api.new()
         api.resize(self._obj, self._width, self._height)
 
@@ -80,8 +83,8 @@ class Decoder(object):
         pixels = image.load()
 
         idx = 0
-        for i in range(self._width):
-            for j in range(self._height):
+        for i in self._width_iter:
+            for j in self._height_iter:
                 buffer[idx] = ctypes.c_uint8(pixels[j, i])
                 idx += 1
 
