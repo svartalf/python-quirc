@@ -7,3 +7,4 @@ __version__ = '0.7.0'
 
 import api
 from base import decode, Decoder
+from api.exceptions import DecodeException
