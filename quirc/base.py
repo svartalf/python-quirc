@@ -12,6 +12,21 @@ if compat.have_pil:
     except ImportError:
         from PIL import Image
 
+class Code(object):
+    """Structure for storing extracted QR code data"""
+
+    __slots__ = ('corners', 'size', 'version', 'ecc_level', 'data_type', 'text')
+
+    def __init__(self, corners, size, version, ecc_level, data_type, text):
+        self.corners = corners
+        self.size = size
+        self.version = version
+        self.ecc_level = ecc_level
+        self.data_type = data_type
+        self.text = text
+
+    def __repr__(self):
+        return self.text
 
 def decode(image):
     """Recognize image and return generator with all the available QR codes
@@ -48,14 +63,14 @@ def decode(image):
         api.extract(obj, i, code)
         api.decode(code, data)
 
-        yield {
-            'corners': tuple([(corner.x, corner.y) for corner in code.corners]),
-            'size': code.size,
-            'version': data.version,
-            'ecc_level': data.ecc_level,
-            'data_type': data.data_type,
-            'text': ctypes.string_at(data.payload, data.payload_len),
-        }
+        yield Code(
+            tuple([(corner.x, corner.y) for corner in code.corners]),
+            code.size,
+            data.version,
+            data.ecc_level,
+            data.data_type,
+            ctypes.string_at(data.payload, data.payload_len),
+        )
 
     api.destroy(obj)
 

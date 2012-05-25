@@ -7,10 +7,10 @@ It is very simple in use::
     from PIL import Image
 
     for code in quirc.decode(Image.open('images/qr-code.png')):
-        print code['text']
+        print code
 
 `quirc.decode` function returns generator, which contains results of QR codes recognition.
-Each item is `dict` object with those keys:
+Each item is an object with those attributes:
 
     corners
         Tuple with the four corners of the QR code, from top left, clockwise

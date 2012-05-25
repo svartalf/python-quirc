@@ -3,6 +3,8 @@ Low-level API
 
 Low-level API fully copies the C API and contains all in the `quirc.api` module.
 
+**Warning**: you will need to use *ctypes* here manually.
+
 .. automodule:: quirc.api
 
 
@@ -47,3 +49,4 @@ Usage
         print ctypes.string_at(data.payload, data.payload_len)
 
     api.destroy(obj)
+

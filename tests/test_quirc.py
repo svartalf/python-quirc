@@ -40,9 +40,9 @@ class TestQuircCase(unittest.TestCase):
 
         code = result[0]
 
-        self.assertEqual(code['data_type'], 4)
-        self.assertEqual(code['ecc_level'], 0)
-        self.assertEqual(code['size'], 29)
+        self.assertEqual(code.data_type, 4)
+        self.assertEqual(code.ecc_level, 0)
+        self.assertEqual(code.size, 29)
 
-        self.assertTupleEqual(code['corners'], ((16, 16), (132, 16), (132, 132), (16, 132)))
-        self.assertEqual(code['text'], 'https://github.com/svartalf/python-quirc')
+        self.assertTupleEqual(code.corners, ((16, 16), (132, 16), (132, 132), (16, 132)))
+        self.assertEqual(code.text, str(code), 'https://github.com/svartalf/python-quirc')
