@@ -83,32 +83,45 @@ class Decoder(object):
         self._width = width
         self._height = height
 
-        self._width_iter = compat.range(self._width)
-        self._height_iter = compat.range(self._height)
-
         self._obj = api.new()
         api.resize(self._obj, self._width, self._height)
 
         self._code = api.structures.Code()
         self._data = api.structures.Data()
 
-    def decode(self, image):
+    def decode(self, data):
+        """Fill buffer with a raw binary data
+
+        Each byte already must represent one pixel
+
+        Parameters::
+
+            data : image binary data
+        """
+
         buffer = api.begin(self._obj, self._width, self._height)
 
-        if image.mode not in ('1', 'L'):
-            image = image.convert('L')
-        pixels = image.load()
+        converters.raw(buffer, data)
 
-        idx = 0
-        for i in self._width_iter:
-            for j in self._height_iter:
-                buffer[idx] = ctypes.c_uint8(pixels[j, i])
-                idx += 1
-
-        del idx
-
-        # Finish codes identification
         api.end(self._obj)
+
+        for i in range(api.count(self._obj)):
+
+            # Extract first code
+            api.extract(self._obj, i, self._code)
+            try:
+                api.decode(self._code, self._data)
+            except api.exceptions.DecodeException:
+                continue
+
+            yield Code(
+                tuple([(corner.x, corner.y) for corner in self._code.corners]),
+                self._code.size,
+                self._data.version,
+                self._data.ecc_level,
+                self._data.data_type,
+                ctypes.string_at(self._data.payload, self._data.payload_len),
+            )
 
     def __del__(self):
         api.destroy(self._obj)

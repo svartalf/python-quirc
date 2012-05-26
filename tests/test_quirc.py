@@ -21,9 +21,22 @@ class TestQuircCase(unittest.TestCase):
     def setUp(self):
         self._folder = os.path.abspath(os.path.dirname(__file__))
 
+    @unittest.skipIf(not compat.have_pil, 'PIL is unaccessible')
     def test_decoder(self):
         decoder = quirc.Decoder(148, 148)
-        decoder.decode(Image.open(os.path.join(self._folder, 'images', 'link.gif')))
+        image = Image.open(os.path.join(self._folder, 'images', 'link.gif')).convert('L')
+        result = list(decoder.decode(image.tostring()))
+
+        self.assertEqual(len(result), 1)
+
+        code = result[0]
+
+        self.assertEqual(code.data_type, 4)
+        self.assertEqual(code.ecc_level, 0)
+        self.assertEqual(code.size, 29)
+
+        self.assertTupleEqual(code.corners, ((16, 16), (132, 16), (132, 132), (16, 132)))
+        self.assertEqual(code.text, 'https://github.com/svartalf/python-quirc')
 
     @unittest.skipIf(not compat.have_pil, 'PIL is unaccessible')
     def test_pil(self):
@@ -45,4 +58,4 @@ class TestQuircCase(unittest.TestCase):
         self.assertEqual(code.size, 29)
 
         self.assertTupleEqual(code.corners, ((16, 16), (132, 16), (132, 132), (16, 132)))
-        self.assertEqual(code.text, str(code), 'https://github.com/svartalf/python-quirc')
+        self.assertEqual(code.text, 'https://github.com/svartalf/python-quirc')
