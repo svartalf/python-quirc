@@ -103,7 +103,7 @@ def begin(recognizer, width, height):
     if not isinstance(recognizer, QuircPointer):
         raise TypeError('Wrong type for recognizer parameter')
 
-    return _begin(structure, ctypes.byref(ctypes.c_int(width)), ctypes.byref(ctypes.c_int(height)))
+    return _begin(recognizer, ctypes.byref(ctypes.c_int(width)), ctypes.byref(ctypes.c_int(height)))
 
 _end = libquirc.quirc_end
 _end.argtypes = (QuircPointer,)
