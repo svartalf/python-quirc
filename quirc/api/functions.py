@@ -25,9 +25,13 @@ _new.restype = QuircPointer
 
 
 def new():
-    """Construct a new QR-code recognizer.
+    """Construct a new QR code recognizer.
 
-    Instead of a C function, raises `MemoryError' if sufficient memory could not be allocated"""
+    Do not forget to destroy in later with a `quirc.api.destroy`_ function.
+
+    :raises: ``MemoryError`` if sufficient memory could not be allocated.
+    :returns: ``quirc.api.structures.Quirc`` instance.
+    """
 
     result = _new()
     if not result:
@@ -40,28 +44,40 @@ _destroy.argtypes = (QuircPointer,)
 _destroy.restype = None
 
 
-def destroy(structure):
-    """Destroy a QR-code recognizer.
+def destroy(recognizer):
+    """Destroy a QR code recognizer.
 
+    :param quirc.api.structures.Quirc recognizer: object, returned by `quirc.api.new`_ function.
     """
 
-    # TODO: parameter type check
+    if not isinstance(recognizer, QuircPointer):
+        raise TypeError('Wrong type for recognizer parameter')
 
-    _destroy(structure)
+    _destroy(recognizer)
 
 _resize = libquirc.quirc_resize
 _resize.argtypes = (QuircPointer, ctypes.c_int, ctypes.c_int)
 _resize.restype = ctypes.c_int
 
 
-def resize(structure, width, height):
-    """Resize the QR-code recognizer.
+def resize(recognizer, width, height):
+    """Resize the QR code recognizer.
 
-    The size of an image must be specified before codes can be analyzed."""
+    The size of an image must be specified before codes can be analyzed.
 
-    # TODO: parameter type check
+    :raises: ``MemoryError`` if sufficient memory could not be allocated.
 
-    result = _resize(structure, ctypes.c_int(width), ctypes.c_int(height))
+    :param quirc.api.structures.Quirc recognizer: object, returned by `quirc.api.new`_ function.
+    :param integer width: image width (in pixels)
+    :param integer height: image height (in pixels)
+    """
+
+    if not isinstance(recognizer, QuircPointer):
+        raise TypeError('Wrong type for recognizer parameter')
+
+    # TODO: check parameters type for width and height
+
+    result = _resize(recognizer, ctypes.c_int(width), ctypes.c_int(height))
     if result == -1:
         raise MemoryError()
 
@@ -70,42 +86,79 @@ _begin.argtypes = (QuircPointer, c_int_pointer, c_int_pointer)
 _begin.restype = c_uint8_pointer
 
 
-def begin(structure, width, height):
-    # TODO: docstring
-    # TODO: parameter type check
+def begin(recognizer, width, height):
+    """First part of the QR code recognition process.
 
-    return _begin(structure, ctypes.pointer(ctypes.c_int(width)), ctypes.pointer(ctypes.c_int(height)))
+    This function must be called firstly to obtain access to a buffer into which the input image should be placed.
+    Returned buffer is a ctypes pointer to a allocated memory block. You need to format it with a image binary data.
+
+    Width and height parameters must be equal to the parameters, applied to the function `quirc.api.begin`_.
+
+    :param quirc.api.structures.Quirc recognizer: object, returned by `quirc.api.new`_ function.
+    :param integer width: image width (in pixels)
+    :param integer height: image height (in pixels)
+    :returns: ctypes pointer to buffer
+    """
+
+    if not isinstance(recognizer, QuircPointer):
+        raise TypeError('Wrong type for recognizer parameter')
+
+    return _begin(structure, ctypes.byref(ctypes.c_int(width)), ctypes.byref(ctypes.c_int(height)))
 
 _end = libquirc.quirc_end
 _end.argtypes = (QuircPointer,)
 _end.restype = None
 
 
-def end(structure):
-    # TODO: docstring
-    # TODO: parameter type check
-    _end(structure)
+def end(recognizer):
+    """Must be called after filling the buffer to process the image for QR code recognition.
+
+    :param quirc.api.structures.Quirc recognizer: object, returned by `quirc.api.new`_ function.
+    """
+
+    if not isinstance(recognizer, QuircPointer):
+        raise TypeError('Wrong type for recognizer parameter')
+
+    _end(recognizer)
 
 _count = libquirc.quirc_count
 _count.argtypes = (QuircPointer,)
 _count.restype = ctypes.c_int
 
 
-def count(structure):
-    # TODO: docstring
-    # TODO: parameter type check
+def count(recognizer):
+    """Number of QR codes identified in the last processed image.
 
-    return _count(structure)
+    :param quirc.api.structures.Quirc recognizer: object, returned by `quirc.api.new`_ function.
+    :rtype: number of identified QR codes
+    """
+
+    if not isinstance(recognizer, QuircPointer):
+        raise TypeError('Wrong type for recognizer parameter')
+
+    return _count(recognizer)
 
 _extract = libquirc.quirc_extract
 _extract.argtypes = (QuircPointer, ctypes.c_int, CodePointer)
 _extract.restype = ctypes.c_int
 
 
-def extract(structure, idx, code):
-    # TODO: doctring
+def extract(recognizer, idx, code):
+    """Extract the QR code specified by the given index.
+
+    Before calling this function, create object of a `Code` class, and it will be filled with a QR code information.
+
+    :param quirc.api.structures.Quirc recognizer: object, returned by `quirc.api.new`_ function.
+    :param integer idx: index of the recognized QR code.
+    :param quirc.api.structures.Code code: instance of the ``Code`` class.
+    """
+
+    if not isinstance(recognizer, QuircPointer):
+        raise TypeError('Wrong type for recognizer parameter')
+
     # TODO: parameter type check
-    _extract(structure, idx, ctypes.byref(code))
+
+    _extract(recognizer, idx, ctypes.byref(code))
 
 
 def _decode_errcheck(result, func, arguments):
@@ -119,6 +172,13 @@ _decode.errcheck = _decode_errcheck
 
 
 def decode(code, data):
-    # TODO: docstring
+    """Decode a QR code
+
+    Fill instance of the ``quirc.api.structures.Data`` class with a QR code decoded data.
+
+    :param quirc.api.structures.Code code: instance of the `Code` class.
+    :param quirc.api.structures.Data data: instance of the `Data` class.
+    """
+
     # TODO: parameter type check
     return _decode(ctypes.byref(code), ctypes.byref(data))

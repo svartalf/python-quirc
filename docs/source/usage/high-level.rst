@@ -9,7 +9,10 @@ It is very simple in use::
     for code in quirc.decode(Image.open('images/qr-code.png')):
         print code
 
-`quirc.decode` function returns generator, which contains results of QR codes recognition.
+.. py:function:: quirc.base.decode(raw_data)
+
+Returns generator, which contains results of QR codes recognition.
+
 Each item is an object with those attributes:
 
     corners

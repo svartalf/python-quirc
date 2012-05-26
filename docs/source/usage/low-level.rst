@@ -1,15 +1,58 @@
 Low-level API
 ==============
 
-Low-level API fully copies the C API and contains all in the `quirc.api` module.
+Low-level API fully copies the C API and is contained in the ``quirc.api`` module.
 
-**Warning**: you will need to use *ctypes* here manually.
+See `example`_ for workflow.
 
-.. automodule:: quirc.api
+**Warning**: you will need to use ``ctypes`` here manually.
 
+Functions
+---------
 
-Usage
------
+Initialization
+``````````````
+
+.. autofunction:: quirc.api.new
+
+.. autofunction:: quirc.api.destroy
+
+.. autofunction:: quirc.api.resize
+
+Recognition
+```````````
+
+.. autofunction:: quirc.api.begin
+
+.. autofunction:: quirc.api.end
+
+Extraction
+``````````
+
+.. autofunction:: quirc.api.count
+
+.. autofunction:: quirc.api.extract
+
+.. autofunction:: quirc.api.decode
+
+Miscellaneous
+`````````````
+
+.. autofunction:: quirc.api.version
+
+Classes
+-------
+
+.. autoclass:: quirc.api.structures.Quirc
+
+.. autoclass:: quirc.api.structures.Code
+
+.. autoclass:: quirc.api.structures.Point
+
+.. autoclass:: quirc.api.structures.Data
+
+Example
+-------
 
 ::
 
