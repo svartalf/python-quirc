@@ -31,6 +31,7 @@ def pil(image):
         for j in height_iter:
             yield ctypes.c_uint8(pixels[j, i])
 
+
 def raw(buffer, data):
     """Fill the buffer with a raw binary data
 
