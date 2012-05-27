@@ -3,6 +3,7 @@
 
 __all__ = ('version', 'new', 'destroy', 'resize', 'begin', 'end', 'count', 'extract', 'decode')
 
+import os
 import ctypes
 from ctypes.util import find_library
 
@@ -13,7 +14,14 @@ from quirc.api.structures import QuircPointer, CodePointer, DataPointer
 c_int_pointer = ctypes.POINTER(ctypes.c_int)
 c_uint8_pointer = ctypes.POINTER(ctypes.c_uint8)
 
-libquirc = ctypes.CDLL(find_library('quirc'))
+try:
+    libquirc = ctypes.CDLL(find_library('quirc'))
+except OSError:
+    if not 'READTHEDOCS' in os.environ:
+        raise
+
+    from quirc.compat import Mock
+    libquirc = Mock()
 
 version = libquirc.quirc_version
 version.restype = ctypes.c_char_p
