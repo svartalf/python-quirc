@@ -17,6 +17,7 @@ c_uint8_pointer = ctypes.POINTER(ctypes.c_uint8)
 try:
     libquirc = ctypes.CDLL(find_library('quirc'))
 except OSError:
+    print os.environ.keys()
     if not 'READTHEDOCS' in os.environ:
         raise
 

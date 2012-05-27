@@ -14,7 +14,22 @@ if compat.have_pil:
 
 
 class Code(object):
-    """Structure for storing extracted QR code data"""
+    """Structure for storing extracted QR code data
+
+    corners
+        Tuple with the four corners of the QR code, from top left, clockwise
+    size
+        The number of cells across in the QR code
+    version
+        QR code version
+    ecc_level
+        The percentage of unreadable codewords can be restored in a QR Code symbol without data loss
+    data_type
+        QR code type
+    text
+        Encoded text
+
+    """
 
     __slots__ = ('corners', 'size', 'version', 'ecc_level', 'data_type', 'text')
 
